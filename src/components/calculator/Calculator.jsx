@@ -8,7 +8,12 @@ function Calculator() {
   const [operator, setOperator] = useState('')
 
   const handleNumberClick = (num) => {
-    setDisplayValue((prevValue) => prevValue + num)
+    setDisplayValue((prevValue) => {
+      if (prevValue === '0') {
+        return num
+      }
+      return prevValue + num
+    })
   }
 
   const handleOperatorClick = (op) => {
