@@ -4,6 +4,8 @@ import Display from './Display'
 
 function Calculator() {
   const [displayValue, setDisplayValue] = useState('')
+  const [previousValue, setPreviousValue] = useState('')
+  const [operator, setOperator] = useState('')
 
   const handleNumberClick = (num) => {
     setDisplayValue((prevValue) => prevValue + num)
@@ -11,15 +13,9 @@ function Calculator() {
 
   const handleOperatorClick = (op) => {
     if (displayValue !== '') {
-      // Check if the last character of the display value is an operator
-      const lastChar = displayValue.slice(-1)
-      if (lastChar === '+' || lastChar === '-' || lastChar === '*' || lastChar === '/') {
-        // If the last character is an operator, replace it with the new operator
-        setDisplayValue((prevValue) => prevValue.slice(0, -1) + op)
-      } else {
-        // Otherwise, append the operator to the display value
-        setDisplayValue((prevValue) => prevValue + op)
-      }
+      setPreviousValue(displayValue)
+      setOperator(op)
+      setDisplayValue('')
     }
   }
 
@@ -46,19 +42,15 @@ function Calculator() {
 
   const handleClearClick = () => {
     setDisplayValue('')
+    setPreviousValue('')
+    setOperator('')
   }
 
   const handleEqualClick = () => {
     let result = ''
-    try {
-      const operands = displayValue.split(/[-+*/]/)
-      const operator = displayValue.match(/[-+*/]/)[0]
-
-      if (operands.length !== 2) {
-        throw new Error('Invalid expression')
-      }
-
-      const [operand1, operand2] = operands.map(parseFloat)
+    if (operator && previousValue) {
+      const operand1 = parseFloat(previousValue)
+      const operand2 = parseFloat(displayValue)
 
       switch (operator) {
         case '+':
@@ -72,22 +64,19 @@ function Calculator() {
           break
         case '/':
           if (operand2 === 0) {
-            throw new Error('Division by zero')
+            result = 'Error: Division by zero'
+          } else {
+            result = String(operand1 / operand2)
           }
-          result = String(operand1 / operand2)
           break
         default:
-          throw new Error('Invalid operator')
+          result = 'Error: Invalid operator'
       }
-
-      if (result === undefined || result === null || isNaN(result)) {
-        result = ''
-      }
-    } catch (error) {
-      result = ''
     }
 
     setDisplayValue(result)
+    setPreviousValue('')
+    setOperator('')
   }
 
   return (
@@ -119,7 +108,7 @@ function Calculator() {
           <Button className="button orange" onClick={() => handleOperatorClick('+')} value="+" />
         </div>
         <div>
-          <Button className="button wide" onClick={() => handleNumberClick('0')} value={0} />
+          <Button className="button wide" onClick={() => handleNumberClick('0')} value="0" />
           <Button className="button" onClick={handleDecimalClick} value="." />
           <Button className="button orange" onClick={handleEqualClick} value="=" />
         </div>
