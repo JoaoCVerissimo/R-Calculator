@@ -9,18 +9,53 @@ function Calculator() {
 
   const handleNumberClick = (num) => {
     setDisplayValue((prevValue) => {
-      if (prevValue === '0') {
+      if (prevValue === '0' || ['+', '-', '*', '/'].includes(prevValue)) {
         return num
       }
       return prevValue + num
     })
   }
 
+  const performCalculation = (op, operand1, operand2) => {
+    let result = ''
+    switch (op) {
+      case '+':
+        result = String(operand1 + operand2)
+        break
+      case '-':
+        result = String(operand1 - operand2)
+        break
+      case '*':
+        result = String(operand1 * operand2)
+        break
+      case '/':
+        if (operand2 === 0) {
+          result = 'Error: Division by zero'
+        } else {
+          result = String(operand1 / operand2)
+        }
+        break
+      default:
+        result = 'Error: Invalid operator'
+    }
+    return result
+  }
+
   const handleOperatorClick = (op) => {
     if (displayValue !== '') {
-      setPreviousValue(displayValue)
-      setOperator(op)
-      setDisplayValue('')
+      if (operator && previousValue) {
+        const operand1 = parseFloat(previousValue)
+        const operand2 = parseFloat(displayValue)
+        const result = performCalculation(operator, operand1, operand2)
+
+        setDisplayValue(result)
+        setPreviousValue(result)
+        setOperator(op)
+      } else {
+        setPreviousValue(displayValue)
+        setOperator(op)
+        setDisplayValue(op)
+      }
     }
   }
 
@@ -56,27 +91,7 @@ function Calculator() {
     if (operator && previousValue) {
       const operand1 = parseFloat(previousValue)
       const operand2 = parseFloat(displayValue)
-
-      switch (operator) {
-        case '+':
-          result = String(operand1 + operand2)
-          break
-        case '-':
-          result = String(operand1 - operand2)
-          break
-        case '*':
-          result = String(operand1 * operand2)
-          break
-        case '/':
-          if (operand2 === 0) {
-            result = 'Error: Division by zero'
-          } else {
-            result = String(operand1 / operand2)
-          }
-          break
-        default:
-          result = 'Error: Invalid operator'
-      }
+      result = performCalculation(operator, operand1, operand2)
     }
 
     setDisplayValue(result)
