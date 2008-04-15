@@ -2,14 +2,27 @@ import React, { useState } from 'react'
 import Button from './Button'
 import Display from './Display'
 
+// TODO: Add keyboard support for all buttons;
+// TODO: If the previous one was an operator and the user clicks another operator, replace the previous operator with the new one;
+// TODO: Styles for when operator is clicked;
+
 function Calculator() {
   const [displayValue, setDisplayValue] = useState('')
   const [previousValue, setPreviousValue] = useState('')
   const [operator, setOperator] = useState('')
+  const [shouldClearDisplay, setShouldClearDisplay] = useState(false)
 
   const handleNumberClick = (num) => {
     setDisplayValue((prevValue) => {
+      if (shouldClearDisplay) {
+        setShouldClearDisplay(false)
+        return num
+      }
       if (prevValue === '0' || ['+', '-', '*', '/'].includes(prevValue)) {
+        if (previousValue === '') {
+          setPreviousValue(num)
+          return num
+        }
         return num
       }
       return prevValue + num
@@ -50,12 +63,11 @@ function Calculator() {
 
         setDisplayValue(result)
         setPreviousValue(result)
-        setOperator(op)
       } else {
         setPreviousValue(displayValue)
-        setOperator(op)
-        setDisplayValue(op)
       }
+      setOperator(op)
+      setShouldClearDisplay(true)
     }
   }
 
@@ -84,6 +96,7 @@ function Calculator() {
     setDisplayValue('')
     setPreviousValue('')
     setOperator('')
+    setShouldClearDisplay(false)
   }
 
   const handleEqualClick = () => {
@@ -97,6 +110,7 @@ function Calculator() {
     setDisplayValue(result)
     setPreviousValue('')
     setOperator('')
+    setShouldClearDisplay(true)
   }
 
   return (
