@@ -1,38 +1,81 @@
+/* eslint-disable no-eval */
 import React, { useState } from "react";
 
 
 function Calculator() {
     const [number, setNumber] = useState(0);
-    const [firstNumber, setFirstNumber] = useState(0);
+    const [oldNumber, setOldNumber] = useState(0);
     const [operator, setOperator] = useState();
 
     function inputNumber(e) {
         parseInt(number) === 0 ? setNumber(e.target.value) : setNumber(number + e.target.value);
     }
 
-    function handleOperator(e) {
-        let op = e.target.value;
-        setOperator(op);
-        setFirstNumber(number);
+    function clear() {
         setNumber(0);
+        setOldNumber(0);
     }
 
-    function getResult() {
-        switch (operator) {
-            case "÷":
-                setNumber(parseFloat(firstNumber) / parseFloat(number));
-                break;
-            case "x":
-                setNumber(parseFloat(firstNumber) * parseFloat(number));
-                break;
-            case "+":
-                setNumber(parseFloat(firstNumber) + parseFloat(number));
-                break;
-            case "-":
-                setNumber(parseFloat(firstNumber) - parseFloat(number));
-                break;
-            default:
-                break;
+    function handleOperator(e) {
+        let op = e.target.value;
+        if (oldNumber === 0) {
+            setOperator(op);
+            setOldNumber(parseFloat(number));
+            setNumber(0);
+        } else {
+            getResult()
+            setOperator(op);
+        }
+
+    }
+
+    function getResult(e) {
+        if (e) {
+            switch (operator) {
+                case "÷":
+                    //setNumber(eval("oldNumber / number"));
+                    setNumber(parseFloat(oldNumber) / parseFloat(number));
+                    setOldNumber(parseFloat(0));
+                    break;
+                case "x":
+                    setNumber(parseFloat(oldNumber) * parseFloat(number));
+                    //setNumber(eval("oldNumber * number"));
+                    setOldNumber(parseFloat(0));
+                    break;
+                case "+":
+                    setNumber(parseFloat(oldNumber) + parseFloat(number));
+                    //setNumber(eval("oldNumber + number"));
+                    setOldNumber(parseFloat(0));
+                    break;
+                case "-":
+                    setNumber(parseFloat(oldNumber) - parseFloat(number));
+                    //setNumber(eval("oldNumber - number"));
+                    setOldNumber(parseFloat(0));
+                    break;
+                default:
+                    break;
+            }
+        } else {
+            switch (operator) {
+                case "÷":
+                    setOldNumber(parseFloat(oldNumber) / parseFloat(number));
+                    setNumber(0);
+                    break;
+                case "x":
+                    setOldNumber(parseFloat(oldNumber) * parseFloat(number));
+                    setNumber(0);
+                    break;
+                case "+":
+                    setOldNumber(parseFloat(oldNumber) + parseFloat(number));
+                    setNumber(0);
+                    break;
+                case "-":
+                    setOldNumber(parseFloat(oldNumber) - parseFloat(number));
+                    setNumber(0);
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
@@ -43,7 +86,7 @@ function Calculator() {
             </div>
             <div class="button-panel">
                 <div>
-                    <div class="button"><button onClick={() => setNumber(0)}>AC</button></div>
+                    <div class="button"><button onClick={clear}>AC</button></div>
                     <div class="button"><button onClick={() => setNumber(number * -1)}>+/-</button></div>
                     <div class="button"><button onClick={() => setNumber(number / 100)}>%</button></div>
                     <div class="button orange"><button onClick={handleOperator} value={"÷"}>÷</button></div>
@@ -69,7 +112,7 @@ function Calculator() {
                 <div>
                     <div class="button  wide"><button onClick={inputNumber} value={0}>0</button></div>
                     <div class="button"><button onClick={inputNumber} value={"."}>.</button></div>
-                    <div class="button orange"><button onClick={getResult}>=</button></div>
+                    <div class="button orange"><button onClick={getResult} value={"="} >=</button></div>
                 </div>
             </div>
         </div>
