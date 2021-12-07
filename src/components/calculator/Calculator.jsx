@@ -8,6 +8,10 @@ function Calculator() {
         parseInt(number) === 0 ? setNumber(e.target.value) : setNumber(number + e.target.value);
     }
 
+    function clear() {
+        setNumber(0)
+    }
+
     return (
         <div className="app">
             <div class="display">
@@ -15,7 +19,7 @@ function Calculator() {
             </div>
             <div class="button-panel">
                 <div>
-                    <div class="button"><button>AC</button></div>
+                    <div class="button"><button onClick={clear}>AC</button></div>
                     <div class="button"><button>+/-</button></div>
                     <div class="button"><button>%</button></div>
                     <div class="button orange"><button>÷</button></div>
