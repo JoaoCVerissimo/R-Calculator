@@ -9,7 +9,7 @@ function Calculator() {
     const [flag, setFlag] = useState(false);
 
     function inputNumber(e) {
-        parseInt(number) === 0 || flag === true ? setNumber(e.target.value) : setNumber(number + e.target.value);
+        parseInt(number) === 0 || flag ? setNumber(e.target.value) : setNumber(number + e.target.value);
     }
 
     const clear = () => {
