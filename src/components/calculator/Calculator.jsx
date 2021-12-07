@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-// import Display from "./Display"
-// import Panel from "./Panel"
 
 
 function Calculator() {
