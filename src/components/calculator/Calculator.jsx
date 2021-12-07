@@ -40,7 +40,7 @@ function Calculator() {
                 </div>
                 <div>
                     <div class="button  wide"><button onClick={inputNumber} value={0}>0</button></div>
-                    <div class="button"><button>.</button></div>
+                    <div class="button"><button onClick={inputNumber} value={"."}>.</button></div>
                     <div class="button orange"><button>=</button></div>
                 </div>
             </div>
