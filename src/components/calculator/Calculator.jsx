@@ -6,9 +6,10 @@ function Calculator() {
     const [number, setNumber] = useState(0);
     const [oldNumber, setOldNumber] = useState(0);
     const [operator, setOperator] = useState();
+    const [flag, setFlag] = useState(false);
 
     function inputNumber(e) {
-        parseInt(number) === 0 ? setNumber(e.target.value) : setNumber(number + e.target.value);
+        parseInt(number) === 0 || flag === true ? setNumber(e.target.value) : setNumber(number + e.target.value);
     }
 
     function clear() {
@@ -27,6 +28,7 @@ function Calculator() {
     function handleOperator(e) {
         let op = e.target.value;
         if (oldNumber === 0) {
+            setFlag(false);
             setOperator(op);
             setOldNumber(parseFloat(number));
             setNumber(0);
@@ -43,18 +45,22 @@ function Calculator() {
                 case "÷":
                     setNumber(parseFloat(oldNumber) / parseFloat(number));
                     setOldNumber(0);
+                    setFlag(true);
                     break;
                 case "x":
                     setNumber(parseFloat(oldNumber) * parseFloat(number));
                     setOldNumber(0);
+                    setFlag(true);
                     break;
                 case "+":
                     setNumber(parseFloat(oldNumber) + parseFloat(number));
                     setOldNumber(0);
+                    setFlag(true);
                     break;
                 case "-":
                     setNumber(parseFloat(oldNumber) - parseFloat(number));
                     setOldNumber(0);
+                    setFlag(true);
                     break;
                 default:
                     break;

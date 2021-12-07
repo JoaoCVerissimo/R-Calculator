@@ -9,7 +9,6 @@ function Button(props) {
         )
     } else {
         return (
-
             <div className={value === "x" || value === "-" || value === "+" || value === "÷" || value === "=" ? "button orange" : "button"}>
                 <button onClick={onClick} value={value}>{value}</button>
             </div>
