@@ -1,6 +1,7 @@
 /* eslint-disable no-eval */
 import React, { useState } from "react";
-
+import Display from "./Display";
+import Button from "./Button";
 
 function Calculator() {
     const [number, setNumber] = useState(0);
@@ -16,6 +17,14 @@ function Calculator() {
         setOldNumber(0);
     }
 
+    function changeSignal() {
+        setNumber(number * -1);
+    }
+
+    function getPercentage() {
+        setNumber(number / 100);
+    }
+
     function handleOperator(e) {
         let op = e.target.value;
         if (oldNumber === 0) {
@@ -23,8 +32,8 @@ function Calculator() {
             setOldNumber(parseFloat(number));
             setNumber(0);
         } else {
-            getResult()
             setOperator(op);
+            getResult()
         }
 
     }
@@ -33,24 +42,20 @@ function Calculator() {
         if (e) {
             switch (operator) {
                 case "÷":
-                    //setNumber(eval("oldNumber / number"));
                     setNumber(parseFloat(oldNumber) / parseFloat(number));
-                    setOldNumber(parseFloat(0));
+                    setOldNumber(0);
                     break;
                 case "x":
                     setNumber(parseFloat(oldNumber) * parseFloat(number));
-                    //setNumber(eval("oldNumber * number"));
-                    setOldNumber(parseFloat(0));
+                    setOldNumber(0);
                     break;
                 case "+":
                     setNumber(parseFloat(oldNumber) + parseFloat(number));
-                    //setNumber(eval("oldNumber + number"));
-                    setOldNumber(parseFloat(0));
+                    setOldNumber(0);
                     break;
                 case "-":
                     setNumber(parseFloat(oldNumber) - parseFloat(number));
-                    //setNumber(eval("oldNumber - number"));
-                    setOldNumber(parseFloat(0));
+                    setOldNumber(0);
                     break;
                 default:
                     break;
@@ -81,38 +86,36 @@ function Calculator() {
 
     return (
         <div className="app">
-            <div class="display">
-                <div>{number}</div>
-            </div>
-            <div class="button-panel">
+            <Display num={number} />
+            <div className="button-panel">
                 <div>
-                    <div class="button"><button onClick={clear}>AC</button></div>
-                    <div class="button"><button onClick={() => setNumber(number * -1)}>+/-</button></div>
-                    <div class="button"><button onClick={() => setNumber(number / 100)}>%</button></div>
-                    <div class="button orange"><button onClick={handleOperator} value={"÷"}>÷</button></div>
+                    <Button onClick={clear} value={"AC"} />
+                    <Button onClick={changeSignal} value={"+/-"} />
+                    <Button onClick={getPercentage} value={"%"} />
+                    <Button onClick={handleOperator} value={"÷"} />
                 </div>
                 <div>
-                    <div class="button"><button onClick={inputNumber} value={7}>7</button></div>
-                    <div class="button"><button onClick={inputNumber} value={8}>8</button></div>
-                    <div class="button"><button onClick={inputNumber} value={9}>9</button></div>
-                    <div class="button orange"><button onClick={handleOperator} value={"x"}>x</button></div>
+                    <Button onClick={inputNumber} value={7} />
+                    <Button onClick={inputNumber} value={8} />
+                    <Button onClick={inputNumber} value={9} />
+                    <Button onClick={handleOperator} value={"x"} />
                 </div>
                 <div>
-                    <div class="button"><button onClick={inputNumber} value={4}>4</button></div>
-                    <div class="button"><button onClick={inputNumber} value={5}>5</button></div>
-                    <div class="button"><button onClick={inputNumber} value={6}>6</button></div>
-                    <div class="button orange"><button onClick={handleOperator} value={"-"}>-</button></div>
+                    <Button onClick={inputNumber} value={4} />
+                    <Button onClick={inputNumber} value={5} />
+                    <Button onClick={inputNumber} value={6} />
+                    <Button onClick={handleOperator} value={"-"} />
                 </div>
                 <div>
-                    <div class="button"><button onClick={inputNumber} value={1}>1</button></div>
-                    <div class="button"><button onClick={inputNumber} value={2}>2</button></div>
-                    <div class="button"><button onClick={inputNumber} value={3}>3</button></div>
-                    <div class="button orange"><button onClick={handleOperator} value={"+"}>+</button></div>
+                    <Button onClick={inputNumber} value={1} />
+                    <Button onClick={inputNumber} value={2} />
+                    <Button onClick={inputNumber} value={3} />
+                    <Button onClick={handleOperator} value={"+"} />
                 </div>
                 <div>
-                    <div class="button  wide"><button onClick={inputNumber} value={0}>0</button></div>
-                    <div class="button"><button onClick={inputNumber} value={"."}>.</button></div>
-                    <div class="button orange"><button onClick={getResult} value={"="} >=</button></div>
+                    <Button onClick={inputNumber} value={0} />
+                    <Button onClick={inputNumber} value={"."} />
+                    <Button onClick={getResult} value={"="} />
                 </div>
             </div>
         </div>
