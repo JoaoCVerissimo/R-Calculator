@@ -1,4 +1,3 @@
-/* eslint-disable no-eval */
 import React, { useState } from "react";
 import Display from "./Display";
 import Button from "./Button";
