@@ -12,7 +12,7 @@ function Calculator() {
         parseInt(number) === 0 || flag === true ? setNumber(e.target.value) : setNumber(number + e.target.value);
     }
 
-    function clear() {
+    const clear = () => {
         setNumber(0);
         setOldNumber(0);
     }
