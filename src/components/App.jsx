@@ -1,16 +1,16 @@
 import React from "react";
 import './App.css';
-import Display from "./Display"
-import Panel from "./Panel"
+import Calculator from "./calculator/Calculator"
+// import Display from "./calculator/Display";
+// import Panel from "./calculator/Panel";
 
 
 function App() {
     return (
         <div id="root">
-            <div className="app">
-                <Display />
-                <Panel />
-            </div>
+            {/* <Display />
+            <Panel /> */}
+            <Calculator />
         </div>
     )
 }
