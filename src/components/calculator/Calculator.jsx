@@ -94,33 +94,33 @@ function Calculator() {
             <Display num={number} />
             <div className="button-panel">
                 <div>
-                    <Button onClick={clear} value={"AC"} />
-                    <Button onClick={changeSignal} value={"+/-"} />
-                    <Button onClick={getPercentage} value={"%"} />
-                    <Button onClick={handleOperator} value={"÷"} />
+                    <Button className={"button"} onClick={clear} value={"AC"} />
+                    <Button className={"button"} onClick={changeSignal} value={"+/-"} />
+                    <Button className={"button"} onClick={getPercentage} value={"%"} />
+                    <Button className={"button orange"} onClick={handleOperator} value={"÷"} />
                 </div>
                 <div>
-                    <Button onClick={inputNumber} value={7} />
-                    <Button onClick={inputNumber} value={8} />
-                    <Button onClick={inputNumber} value={9} />
-                    <Button onClick={handleOperator} value={"x"} />
+                    <Button className={"button"} onClick={inputNumber} value={7} />
+                    <Button className={"button"} onClick={inputNumber} value={8} />
+                    <Button className={"button"} onClick={inputNumber} value={9} />
+                    <Button className={"button orange"} onClick={handleOperator} value={"x"} />
                 </div>
                 <div>
-                    <Button onClick={inputNumber} value={4} />
-                    <Button onClick={inputNumber} value={5} />
-                    <Button onClick={inputNumber} value={6} />
-                    <Button onClick={handleOperator} value={"-"} />
+                    <Button className={"button"} onClick={inputNumber} value={4} />
+                    <Button className={"button"} onClick={inputNumber} value={5} />
+                    <Button className={"button"} onClick={inputNumber} value={6} />
+                    <Button className={"button orange"} onClick={handleOperator} value={"-"} />
                 </div>
                 <div>
-                    <Button onClick={inputNumber} value={1} />
-                    <Button onClick={inputNumber} value={2} />
-                    <Button onClick={inputNumber} value={3} />
-                    <Button onClick={handleOperator} value={"+"} />
+                    <Button className={"button"} onClick={inputNumber} value={1} />
+                    <Button className={"button"} onClick={inputNumber} value={2} />
+                    <Button className={"button"} onClick={inputNumber} value={3} />
+                    <Button className={"button orange"} onClick={handleOperator} value={"+"} />
                 </div>
                 <div>
-                    <Button onClick={inputNumber} value={0} />
-                    <Button onClick={inputNumber} value={"."} />
-                    <Button onClick={getResult} value={"="} />
+                    <Button className={"button wide"} onClick={inputNumber} value={0} />
+                    <Button className={"button"} onClick={inputNumber} value={"."} />
+                    <Button className={"button orange"} onClick={getResult} value={"="} />
                 </div>
             </div>
         </div>
