@@ -5,11 +5,11 @@ import Button from "./Button";
 function Calculator() {
     const [number, setNumber] = useState(0);
     const [oldNumber, setOldNumber] = useState(0);
-    const [operator, setOperator] = useState();
+    const [operator, setOperator] = useState("");
     const [flag, setFlag] = useState(false);
 
     function inputNumber(e) {
-        parseInt(number) === 0 || flag ? setNumber(e.target.value) : setNumber(number + e.target.value);
+        parseInt(number) === 0 || flag === true ? setNumber(e.target.value) : setNumber(number + e.target.value);
     }
 
     const clear = () => {
