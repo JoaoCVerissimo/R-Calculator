@@ -7,7 +7,7 @@ function Calculator() {
     const [number, setNumber] = useState(0);
 
     function inputNumber(e) {
-        number == 0 ? setNumber(e.target.value) : setNumber(number + e.target.value);
+        parseInt(number) === 0 ? setNumber(e.target.value) : setNumber(number + e.target.value);
     }
 
     return (
