@@ -9,7 +9,7 @@ function Calculator() {
     const [flag, setFlag] = useState(false);
 
     function inputNumber(e) {
-        parseInt(number) === 0 || flag === true ? setNumber(e.target.value) : setNumber(number + e.target.value);
+        parseInt(number) === 0 || flag ? setNumber(e.target.value) : setNumber(number + e.target.value);
     }
 
     const clear = () => {
@@ -40,52 +40,49 @@ function Calculator() {
     }
 
     function getResult(e) {
-        if (e) {
-            switch (operator) {
-                case "÷":
+        switch (operator) {
+            case "÷":
+                if (e) {
                     setNumber(parseFloat(oldNumber) / parseFloat(number));
                     setOldNumber(0);
                     setFlag(true);
-                    break;
-                case "x":
+                } else {
+                    setOldNumber(parseFloat(oldNumber) / parseFloat(number));
+                    setNumber(0);
+                }
+                break;
+            case "x":
+                if (e) {
                     setNumber(parseFloat(oldNumber) * parseFloat(number));
                     setOldNumber(0);
                     setFlag(true);
-                    break;
-                case "+":
+                } else {
+                    setOldNumber(parseFloat(oldNumber) * parseFloat(number));
+                    setNumber(0);
+                }
+                break;
+            case "+":
+                if (e) {
                     setNumber(parseFloat(oldNumber) + parseFloat(number));
                     setOldNumber(0);
                     setFlag(true);
-                    break;
-                case "-":
+                } else {
+                    setOldNumber(parseFloat(oldNumber) + parseFloat(number));
+                    setNumber(0);
+                }
+                break;
+            case "-":
+                if (e) {
                     setNumber(parseFloat(oldNumber) - parseFloat(number));
                     setOldNumber(0);
                     setFlag(true);
-                    break;
-                default:
-                    break;
-            }
-        } else {
-            switch (operator) {
-                case "÷":
-                    setOldNumber(parseFloat(oldNumber) / parseFloat(number));
-                    setNumber(0);
-                    break;
-                case "x":
-                    setOldNumber(parseFloat(oldNumber) * parseFloat(number));
-                    setNumber(0);
-                    break;
-                case "+":
-                    setOldNumber(parseFloat(oldNumber) + parseFloat(number));
-                    setNumber(0);
-                    break;
-                case "-":
+                } else {
                     setOldNumber(parseFloat(oldNumber) - parseFloat(number));
                     setNumber(0);
-                    break;
-                default:
-                    break;
-            }
+                }
+                break;
+            default:
+                break;
         }
     }
 
