@@ -3,14 +3,14 @@ import Button from './Button'
 import Display from './Display'
 
 // TODO: Add keyboard support for all buttons;
-// TODO: If the previous one was an operator and the user clicks another operator, replace the previous operator with the new one;
 // TODO: Styles for when operator is clicked;
 
 function Calculator() {
-  const [displayValue, setDisplayValue] = useState('')
+  const [displayValue, setDisplayValue] = useState('0')
   const [previousValue, setPreviousValue] = useState('')
   const [operator, setOperator] = useState('')
   const [shouldClearDisplay, setShouldClearDisplay] = useState(false)
+  const [isOperatorDisabled, setIsOperatorDisabled] = useState(false)
 
   const handleNumberClick = (num) => {
     setDisplayValue((prevValue) => {
@@ -27,6 +27,7 @@ function Calculator() {
       }
       return prevValue + num
     })
+    setIsOperatorDisabled(false)
   }
 
   const performCalculation = (op, operand1, operand2) => {
@@ -68,6 +69,7 @@ function Calculator() {
       }
       setOperator(op)
       setShouldClearDisplay(true)
+      setIsOperatorDisabled(true)
     }
   }
 
@@ -93,53 +95,87 @@ function Calculator() {
   }
 
   const handleClearClick = () => {
-    setDisplayValue('')
+    setDisplayValue('0')
     setPreviousValue('')
     setOperator('')
     setShouldClearDisplay(false)
+    setIsOperatorDisabled(false)
   }
 
   const handleEqualClick = () => {
-    let result = ''
-    if (operator && previousValue) {
-      const operand1 = parseFloat(previousValue)
-      const operand2 = parseFloat(displayValue)
-      result = performCalculation(operator, operand1, operand2)
+    if (!operator || !previousValue || !displayValue) {
+      return
     }
 
-    setDisplayValue(result)
-    setPreviousValue('')
-    setOperator('')
-    setShouldClearDisplay(true)
+    if (previousValue && operator && displayValue) {
+      const operand1 = parseFloat(previousValue)
+      const operand2 = parseFloat(displayValue)
+      const result = performCalculation(operator, operand1, operand2)
+
+      setDisplayValue(result)
+      setPreviousValue('')
+      setOperator('')
+      setShouldClearDisplay(true)
+    }
   }
 
   return (
     <div className="app">
-      <Display num={displayValue || '0'} />
+      <Display num={displayValue} />
       <div className="button-panel">
         <div>
           <Button className="button" onClick={handleClearClick} value="AC" />
-          <Button className="button" onClick={handleSignChangeClick} value="+/-" />
-          <Button className="button" onClick={handlePercentageClick} value="%" />
-          <Button className="button orange" onClick={() => handleOperatorClick('/')} value="÷" />
+          <Button
+            className="button"
+            onClick={handleSignChangeClick}
+            value="+/-"
+            disabled={displayValue === '' || displayValue === '0' || displayValue === '-0' || isOperatorDisabled}
+          />
+          <Button
+            className="button"
+            onClick={handlePercentageClick}
+            value="%"
+            disabled={displayValue === '' || displayValue === '0' || displayValue === '-0' || isOperatorDisabled}
+          />
+          <Button
+            className="button orange"
+            onClick={() => handleOperatorClick('/')}
+            value="÷"
+            disabled={displayValue === '' || displayValue === '0' || displayValue === '-0' || isOperatorDisabled}
+          />
         </div>
         <div>
           {['7', '8', '9'].map((num) => (
             <Button className="button" onClick={() => handleNumberClick(num)} value={num} key={num} />
           ))}
-          <Button className="button orange" onClick={() => handleOperatorClick('*')} value="x" />
+          <Button
+            className="button orange"
+            onClick={() => handleOperatorClick('*')}
+            value="x"
+            disabled={displayValue === '' || isOperatorDisabled}
+          />
         </div>
         <div>
           {['4', '5', '6'].map((num) => (
             <Button className="button" onClick={() => handleNumberClick(num)} value={num} key={num} />
           ))}
-          <Button className="button orange" onClick={() => handleOperatorClick('-')} value="-" />
+          <Button
+            className="button orange"
+            onClick={() => handleOperatorClick('-')}
+            value="-"
+            disabled={displayValue === '' || isOperatorDisabled}
+          />
         </div>
         <div>
           {['1', '2', '3'].map((num) => (
             <Button className="button" onClick={() => handleNumberClick(num)} value={num} key={num} />
           ))}
-          <Button className="button orange" onClick={() => handleOperatorClick('+')} value="+" />
+          <Button
+            className="button orange"
+            onClick={() => handleOperatorClick('+')}
+            value="+"
+            disabled={displayValue === '' || isOperatorDisabled}
+          />
         </div>
         <div>
           <Button className="button wide" onClick={() => handleNumberClick('0')} value="0" />
