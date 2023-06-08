@@ -3,7 +3,6 @@ import Button from './Button'
 import Display from './Display'
 
 // TODO: Add keyboard support for all buttons;
-// TODO: Styles for when operator is clicked;
 
 function Calculator() {
   const [displayValue, setDisplayValue] = useState('0')
@@ -138,7 +137,7 @@ function Calculator() {
             disabled={displayValue === '' || displayValue === '0' || displayValue === '-0' || isOperatorDisabled}
           />
           <Button
-            className="button orange"
+            className={`button orange ${isOperatorDisabled && operator === '/' ? 'selected-operator' : ''}`}
             onClick={() => handleOperatorClick('/')}
             value="÷"
             disabled={displayValue === '' || displayValue === '0' || displayValue === '-0' || isOperatorDisabled}
@@ -149,7 +148,7 @@ function Calculator() {
             <Button className="button" onClick={() => handleNumberClick(num)} value={num} key={num} />
           ))}
           <Button
-            className="button orange"
+            className={`button orange ${isOperatorDisabled && operator === '*' ? 'selected-operator' : ''}`}
             onClick={() => handleOperatorClick('*')}
             value="x"
             disabled={displayValue === '' || isOperatorDisabled}
@@ -160,7 +159,7 @@ function Calculator() {
             <Button className="button" onClick={() => handleNumberClick(num)} value={num} key={num} />
           ))}
           <Button
-            className="button orange"
+            className={`button orange ${isOperatorDisabled && operator === '-' ? 'selected-operator' : ''}`}
             onClick={() => handleOperatorClick('-')}
             value="-"
             disabled={displayValue === '' || isOperatorDisabled}
@@ -171,7 +170,7 @@ function Calculator() {
             <Button className="button" onClick={() => handleNumberClick(num)} value={num} key={num} />
           ))}
           <Button
-            className="button orange"
+            className={`button orange ${isOperatorDisabled && operator === '+' ? 'selected-operator' : ''}`}
             onClick={() => handleOperatorClick('+')}
             value="+"
             disabled={displayValue === '' || isOperatorDisabled}

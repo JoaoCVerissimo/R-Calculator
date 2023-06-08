@@ -86,6 +86,10 @@ body {
   opacity: 0.5;
 }
 
+.selected-operator {
+  border: 2px solid black;
+}
+
 .button-panel {
   background-color: #858694;
   display: -ms-flexbox;
